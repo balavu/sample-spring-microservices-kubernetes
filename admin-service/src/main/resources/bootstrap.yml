@@ -7,6 +7,5 @@ spring:
         all-namespaces: true
         service-labels:
           spring-boot: true
-
 server:
   port: 8092
