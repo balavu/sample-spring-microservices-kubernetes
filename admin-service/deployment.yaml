@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service
+  namespace: dso-poc
+  labels:
+    app: admin-service
+    intent: apps
+spec:
+  selector:
+    matchLabels:
+      app: admin-service
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: admin-service
+        intent: apps
+      annotations:
+        kubernetes.io/psp: eks.privileged
+    spec:     
+      containers:
+      - name: admin-service
+        image: 186294677623.dkr.ecr.ap-south-1.amazonaws.com/admin-service-poc:0.01
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+#        livenessProbe:
+#          httpGet:
+#            path: /actuator/health/liveness
+#            port: 8091
+#            scheme: HTTP
+#          initialDelaySeconds: 30
+#          timeoutSeconds: 30
+#          periodSeconds: 35
+#          successThreshold: 1
+#          failureThreshold: 2
+#        readinessProbe:
+#          httpGet:
+#            path: /actuator/health/readiness
+#            port: 8091
+#            scheme: HTTP
+#          initialDelaySeconds: 30
+#          timeoutSeconds: 30
+#          periodSeconds: 35
+#          successThreshold: 1
+#          failureThreshold: 3
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+  namespace: dso-poc
+  labels:
+    app: admin-service
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: admin-service
+  type: NodePort
