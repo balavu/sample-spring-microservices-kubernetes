@@ -1,0 +1,123 @@
+pipeline {
+  agent any
+  environment {
+    buildnumber = "${env.BUILD_NUMBER}"
+    branchname = "master"
+   // SONAR_TOKEN = sonarqube('sonarqube_token')
+  }
+  tools{
+  jdk 'Java_17'
+  maven 'mvn'
+  }
+  stages {
+    stage("Clean workspace") {
+      steps {
+          cleanWs()
+      }
+      }
+    stage("Checkout the Project") {
+       steps{
+            catchError(buildResult: 'success', stageResult: 'FAILURE') {
+            git branch: "${branchname}", credentialsId: 'bala_git_creds', url: 'https://github.com/balavu/sample-spring-microservices-kubernetes.git'
+            sh '''
+                ls -la
+               '''
+                }
+            }
+        }
+
+    stage('Build'){
+        steps{
+          withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS_Creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+          script{
+          dir('admin-service'){
+            sh "mvn clean install"
+           }
+          }
+        }
+      }
+    }
+    
+    stage("SCA") {
+            steps {
+              dir('admin-service'){
+                dependencyCheck additionalArguments: '--format CSV', odcInstallation: 'OWASP-DC'
+            }
+        }
+    }
+
+   stage ('SAST') {
+            steps {
+              dir('admin-service') {
+                withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
+                withSonarQubeEnv('sonarqube') {
+                sh "mvn clean verify sonar:sonar \
+                  -Dsonar.host.url=http://localhost:9000 \
+                  -Dsonar.login=$SONAR_TOKEN \
+                  -Dsonar.projectVersion=${BUILD_NUMBER}"
+              }
+            }
+          }
+      }
+    }    
+    stage('Build the Image') {
+      steps {
+        script {
+            dir('admin-service') {
+            sh 'docker build -t admin:0.${buildnumber} .'
+        }
+      }
+    }
+  }
+  stage('Run Application Locally') {
+            steps {
+                sh '''
+                    docker network create zapnet
+                    docker run --net zapnet -d --name admin-instance -p 8092:8092 admin:0.${buildnumber}
+                '''
+            }
+        }
+   stage('Push the Image to Amazon ECR') {
+      steps {
+        script {
+                // Use the stored AWS credentials
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS_Creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                // Log in to Amazon ECR
+                sh("aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 186294677623.dkr.ecr.ap-south-1.amazonaws.com")
+                        
+                // Tag Docker image
+                sh "docker tag admin:0.${buildnumber} 186294677623.dkr.ecr.ap-south-1.amazonaws.com/admin-service-poc:0.${buildnumber}"
+                        
+                // Push Docker image
+                sh "docker push 186294677623.dkr.ecr.ap-south-1.amazonaws.com/admin-service-poc:0.${buildnumber}"
+                    }
+                }
+            }
+        }   
+    
+stage('DAST') {
+    steps {
+        script {
+            // Get the IP address from EC2 metadata
+            def ip = sh(script: 'curl http://169.254.169.254/latest/meta-data/local-ipv4', returnStdout: true).trim()
+            // Run the ZAP scan
+            sh """
+                docker run --net zapnet -p 8090:8080 -v \$(pwd):/zap/wrk/:rw --user root -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py \
+                    -t http://${ip}:8092 -g gen.conf -r testreport.html
+            """
+        }
+    }
+}
+ /*   stage(' Deploy to EKS '){
+    steps{
+      script {              
+        withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k8s-deploy', namespace: '', serverUrl: '') {
+        dir('admin-service') 
+        sh  '''
+            kubectl apply -f ./deployment.yaml
+            '''
+          }                
+        }
+    }*/
+  }
+}
