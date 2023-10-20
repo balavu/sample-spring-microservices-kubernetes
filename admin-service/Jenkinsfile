@@ -3,8 +3,6 @@ pipeline {
   environment {
     buildnumber = "${env.BUILD_NUMBER}"
     branchname = "master"
-    ARCHERY_URL = 'http://15.207.19.249:8000'
-    ARCHERY_API_KEY = 'q1IWgZ86e6IR6dDxQ11y9I7bYih4d2Bh5PkJmO72ZbwVVKbfd4nvI49AE4nctFYs'
    // SONAR_TOKEN = sonarqube('sonarqube_token')
   }
   tools{
@@ -43,7 +41,7 @@ pipeline {
     stage("SCA") {
             steps {
               dir('admin-service'){
-                dependencyCheck additionalArguments: '--format JSON', odcInstallation: 'OWASP-DC'
+                dependencyCheck additionalArguments: '--format XML', odcInstallation: 'OWASP-DC'
             }
         }
     }
@@ -118,6 +116,9 @@ stage('ZAP') {
          steps {
             script {
                 dir('admin-service'){
+                    withCredentials([string(credentialsId: 'ARCHERY_API_KEY_ID', variable: 'ARCHERY_API_KEY')]){
+                    def archeryIP = sh(script: "aws ec2 describe-instances --instance-ids i-0d8bfbb2b6d178141 --query 'Reservations[0].Instances[0].PublicIpAddress' --output text", returnStdout: true).trim()
+                    def ARCHERY_URL = "http://${archeryIP}:8000"
                     sh """
                     python3 -m pip install archerysec-cli --force  
                     """
@@ -129,7 +130,7 @@ stage('ZAP') {
                     /var/lib/jenkins/.local/bin/archerysec-cli -h ${ARCHERY_URL} -t ${ARCHERY_API_KEY} --createproject --project_name "${projectName}" --project_disc "${projectDescription}"
                     """, returnStdout: true).trim()
 
-                    // Parse the response to get the project_id (adjust this based on the actual CLI response)
+                    // Parse the response to get the project_id
                     // run the ArcherySec CLI command and store the output
                     def commandOutput = sh(script: """
                         /var/lib/jenkins/.local/bin/archerysec-cli -h ${ARCHERY_URL} -t ${ARCHERY_API_KEY} --createproject --project_name "${projectName}" --project_disc "${projectDescription}"
@@ -154,13 +155,14 @@ stage('ZAP') {
                     """
                     // Push DependencyCheck report
                     sh """
-                    /var/lib/jenkins/.local/bin/archerysec-cli -h ${ARCHERY_URL} -t ${ARCHERY_API_KEY} -p ./dependency-check-report.json --file-type=JSON --target="admin-service" --scanner=dependencycheck --project="${projectId}" --upload
+                    /var/lib/jenkins/.local/bin/archerysec-cli -h ${ARCHERY_URL} -t ${ARCHERY_API_KEY} -p ./dependency-check-report.xml --file-type=XML --target="admin" --scanner=dependencycheck --project="${projectId}" --upload
                     """
                                         
                 }
             }
         }
     }
+ }
  /*   stage(' Deploy to EKS '){
     steps{
       script {              
