@@ -3,6 +3,8 @@ pipeline {
   environment {
     buildnumber = "${env.BUILD_NUMBER}"
     branchname = "master"
+    ARCHERY_URL = 'http://15.207.19.249:8000'
+    ARCHERY_API_KEY = 'q1IWgZ86e6IR6dDxQ11y9I7bYih4d2Bh5PkJmO72ZbwVVKbfd4nvI49AE4nctFYs'
    // SONAR_TOKEN = sonarqube('sonarqube_token')
   }
   tools{
@@ -41,7 +43,7 @@ pipeline {
     stage("SCA") {
             steps {
               dir('admin-service'){
-                dependencyCheck additionalArguments: '--format CSV', odcInstallation: 'OWASP-DC'
+                dependencyCheck additionalArguments: '--format JSON', odcInstallation: 'OWASP-DC'
             }
         }
     }
@@ -72,12 +74,11 @@ pipeline {
   stage('Run Application Locally') {
             steps {
                 sh '''
-                    docker network create zapnet
-                    docker run --net zapnet -d --name admin-instance -p 8092:8092 admin:0.${buildnumber}
+                    docker run --net zapnet -d --name admin-instance-${buildnumber} -p 8092:8092 admin:0.${buildnumber}
                 '''
             }
         }
-   stage('Push the Image to Amazon ECR') {
+   /* stage('Push the Image to Amazon ECR') {
       steps {
         script {
                 // Use the stored AWS credentials
@@ -94,20 +95,72 @@ pipeline {
                 }
             }
         }   
-    
-stage('DAST') {
+*/
+stage('ZAP') {
     steps {
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         script {
+            dir('admin-service'){
             // Get the IP address from EC2 metadata
             def ip = sh(script: 'curl http://169.254.169.254/latest/meta-data/local-ipv4', returnStdout: true).trim()
             // Run the ZAP scan
             sh """
                 docker run --net zapnet -p 8090:8080 -v \$(pwd):/zap/wrk/:rw --user root -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py \
-                    -t http://${ip}:8092 -g gen.conf -r testreport.html
+                    -t http://${ip}:8092 -g gen.conf -x zapreport.xml
             """
+            }
+          }
         }
     }
 }
+
+ stage('Create Project and Push to ArcherySec') {
+         steps {
+            script {
+                dir('admin-service'){
+                    sh """
+                    python3 -m pip install archerysec-cli --force  
+                    """
+                    def projectName = 'admin-service'
+                    def projectDescription = 'adminservice'
+
+                    // Create a project in ArcherySec
+                    def projectResponse = sh(script: """
+                    /var/lib/jenkins/.local/bin/archerysec-cli -h ${ARCHERY_URL} -t ${ARCHERY_API_KEY} --createproject --project_name "${projectName}" --project_disc "${projectDescription}"
+                    """, returnStdout: true).trim()
+
+                    // Parse the response to get the project_id (adjust this based on the actual CLI response)
+                    // run the ArcherySec CLI command and store the output
+                    def commandOutput = sh(script: """
+                        /var/lib/jenkins/.local/bin/archerysec-cli -h ${ARCHERY_URL} -t ${ARCHERY_API_KEY} --createproject --project_name "${projectName}" --project_disc "${projectDescription}"
+                    """, returnStdout: true).trim()
+                    
+                    // use a regex to match the JSON string from the command output
+                    def jsonOutput = commandOutput.find(/(\{.*\})/)
+                    def projectData = readJSON(text: jsonOutput)
+                    def projectId = projectData.project_id                    
+                    if (jsonOutput) {
+                        echo "Extracted JSON: ${jsonOutput}"
+                        // now you can parse the JSON string
+                        echo "Project ID: ${projectId}"
+                    } else {
+                        echo "Failed to extract JSON from command output."
+                        currentBuild.result = 'FAILURE'
+                    }
+
+                    // Push ZAP report
+                    sh """
+                    /var/lib/jenkins/.local/bin/archerysec-cli -h ${ARCHERY_URL} -t ${ARCHERY_API_KEY} -p ./zapreport.xml --file-type=XML --target="admin-service" --scanner=zap_scan --project="${projectId}" --upload
+                    """
+                    // Push DependencyCheck report
+                    sh """
+                    /var/lib/jenkins/.local/bin/archerysec-cli -h ${ARCHERY_URL} -t ${ARCHERY_API_KEY} -p ./dependency-check-report.json --file-type=JSON --target="admin-service" --scanner=dependencycheck --project="${projectId}" --upload
+                    """
+                                        
+                }
+            }
+        }
+    }
  /*   stage(' Deploy to EKS '){
     steps{
       script {              
