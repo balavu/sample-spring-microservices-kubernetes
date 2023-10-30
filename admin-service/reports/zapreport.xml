@@ -1,0 +1,1047 @@
+<?xml version="1.0"?>
+<OWASPZAPReport programName="ZAP" version="2.14.0" generated="Mon, 30 Oct 2023 09:54:49">
+	
+		<site name="http://172.31.38.110:8092" host="172.31.38.110" port="8092" ssl="false">
+			<alerts>
+				
+					<alertitem>
+						<pluginid>10038</pluginid>
+						<alertRef>10038-1</alertRef>
+						<alert>Content Security Policy (CSP) Header Not Set</alert>
+						<name>Content Security Policy (CSP) Header Not Set</name>
+						<riskcode>2</riskcode>
+						<confidence>3</confidence>
+						<riskdesc>Medium (High)</riskdesc>
+						<confidencedesc>High</confidencedesc>
+						<desc>&lt;p&gt;Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page &#x2014; covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.&lt;/p&gt;</desc>
+						<instances>
+							
+								<instance>
+									<uri>http://172.31.38.110:8092</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+						</instances>
+						<count>2</count>
+						<solution>&lt;p&gt;Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.&lt;/p&gt;</solution>
+						<otherinfo></otherinfo>
+						<reference>&lt;p&gt;https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy&lt;/p&gt;&lt;p&gt;https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html&lt;/p&gt;&lt;p&gt;http://www.w3.org/TR/CSP/&lt;/p&gt;&lt;p&gt;http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html&lt;/p&gt;&lt;p&gt;http://www.html5rocks.com/en/tutorials/security/content-security-policy/&lt;/p&gt;&lt;p&gt;http://caniuse.com/#feat=contentsecuritypolicy&lt;/p&gt;&lt;p&gt;http://content-security-policy.com/&lt;/p&gt;</reference>
+						<cweid>693</cweid>
+						<wascid>15</wascid>
+						<sourceid>7</sourceid>
+					</alertitem>
+				
+				
+					<alertitem>
+						<pluginid>40042</pluginid>
+						<alertRef>40042</alertRef>
+						<alert>Spring Actuator Information Leak</alert>
+						<name>Spring Actuator Information Leak</name>
+						<riskcode>2</riskcode>
+						<confidence>2</confidence>
+						<riskdesc>Medium (Medium)</riskdesc>
+						<confidencedesc>Medium</confidencedesc>
+						<desc>&lt;p&gt;Spring Actuator for Health is enabled and may reveal sensitive information about this application. Spring Actuators can be used for real monitoring purposes, but should be used with caution as to not expose too much information about the application or the infrastructure running it.&lt;/p&gt;</desc>
+						<instances>
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/actuator/health</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>{&quot;status&quot;:&quot;UP&quot;}</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+						</instances>
+						<count>1</count>
+						<solution>&lt;p&gt;Disable the Health Actuators and other actuators, or restrict them to administrative users.&lt;/p&gt;</solution>
+						<otherinfo></otherinfo>
+						<reference>&lt;p&gt;https://docs.spring.io/spring-boot/docs/current/actuator-api/htmlsingle/#overview&lt;/p&gt;</reference>
+						<cweid>215</cweid>
+						<wascid>13</wascid>
+						<sourceid>211</sourceid>
+					</alertitem>
+				
+				
+					<alertitem>
+						<pluginid>10110</pluginid>
+						<alertRef>10110</alertRef>
+						<alert>Dangerous JS Functions</alert>
+						<name>Dangerous JS Functions</name>
+						<riskcode>1</riskcode>
+						<confidence>1</confidence>
+						<riskdesc>Low (Low)</riskdesc>
+						<confidencedesc>Low</confidencedesc>
+						<desc>&lt;p&gt;A dangerous JS function seems to be in use that would leave the site vulnerable.&lt;/p&gt;</desc>
+						<instances>
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>eval</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+						</instances>
+						<count>1</count>
+						<solution>&lt;p&gt;See the references for security advice on the use of these functions.&lt;/p&gt;</solution>
+						<otherinfo></otherinfo>
+						<reference>&lt;p&gt;https://angular.io/guide/security&lt;/p&gt;</reference>
+						<cweid>749</cweid>
+						<wascid>-1</wascid>
+						<sourceid>26</sourceid>
+					</alertitem>
+				
+				
+					<alertitem>
+						<pluginid>10063</pluginid>
+						<alertRef>10063-1</alertRef>
+						<alert>Permissions Policy Header Not Set</alert>
+						<name>Permissions Policy Header Not Set</name>
+						<riskcode>1</riskcode>
+						<confidence>2</confidence>
+						<riskdesc>Low (Medium)</riskdesc>
+						<confidencedesc>Medium</confidencedesc>
+						<desc>&lt;p&gt;Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.&lt;/p&gt;</desc>
+						<instances>
+							
+								<instance>
+									<uri>http://172.31.38.110:8092</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/index-6a52a913.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sba-settings.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+						</instances>
+						<count>5</count>
+						<solution>&lt;p&gt;Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.&lt;/p&gt;</solution>
+						<otherinfo></otherinfo>
+						<reference>&lt;p&gt;https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy&lt;/p&gt;&lt;p&gt;https://developer.chrome.com/blog/feature-policy/&lt;/p&gt;&lt;p&gt;https://scotthelme.co.uk/a-new-security-header-feature-policy/&lt;/p&gt;&lt;p&gt;https://w3c.github.io/webappsec-feature-policy/&lt;/p&gt;&lt;p&gt;https://www.smashingmagazine.com/2018/12/feature-policy/&lt;/p&gt;</reference>
+						<cweid>693</cweid>
+						<wascid>15</wascid>
+						<sourceid>7</sourceid>
+					</alertitem>
+				
+				
+					<alertitem>
+						<pluginid>10027</pluginid>
+						<alertRef>10027</alertRef>
+						<alert>Information Disclosure - Suspicious Comments</alert>
+						<name>Information Disclosure - Suspicious Comments</name>
+						<riskcode>0</riskcode>
+						<confidence>1</confidence>
+						<riskdesc>Informational (Low)</riskdesc>
+						<confidencedesc>Low</confidencedesc>
+						<desc>&lt;p&gt;The response appears to contain suspicious comments which may help an attacker. Note: Matches made within script blocks or files are against the entire content not only comments.&lt;/p&gt;</desc>
+						<instances>
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/index-6a52a913.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>from</evidence>
+									<otherinfo>The following pattern was used: \bFROM\b and was detected 2 times, the first in the element starting with: &quot;`,Hy=String.fromCharCode(8232),Wy=String.fromCharCode(8233);function Vy(e){const t=e;let n=0,a=1,i=1,s=0;const r=M=&gt;t[M]===By&amp;&amp;t&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/index-6a52a913.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>select</evidence>
+									<otherinfo>The following pattern was used: \bSELECT\b and was detected in the element starting with: &quot;(function(){const t=document.createElement(&quot;link&quot;).relList;if(t&amp;&amp;t.supports&amp;&amp;t.supports(&quot;modulepreload&quot;))return;for(const i of d&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/index-6a52a913.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>Todo</evidence>
+									<otherinfo>The following pattern was used: \bTODO\b and was detected in the element starting with: &quot;*/(function(e){(function(){var t={}.hasOwnProperty;function n(){for(var a=[],i=0;i&lt;arguments.length;i++){var s=arguments[i];if(s&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/index-6a52a913.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>user</evidence>
+									<otherinfo>The following pattern was used: \bUSER\b and was detected in the element starting with: &quot;`),e.removeAttribute(n),a()}).catch(i)}else a()}else a()})}function A8(e){return Promise.all([wc(e,&quot;::before&quot;),wc(e,&quot;::after&quot;)])&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>bug</evidence>
+									<otherinfo>The following pattern was used: \bBUG\b and was detected in the element starting with: &quot;If this message still persists after updating, please report an issue: https://github.com/open-draft/msw/issues      `),e.keepAl&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>db</evidence>
+									<otherinfo>The following pattern was used: \bDB\b and was detected in the element starting with: &quot;`}function QX(e){const t=[];for(const n of e)t.push(...n.definitions);return{kind:L.DOCUMENT,definitions:t}}function KX(e){const&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>debug</evidence>
+									<otherinfo>The following pattern was used: \bDEBUG\b and was detected in the element starting with: &quot;`)}var q$=class extends Error{constructor(e,...t){super(e),this.message=e,this.name=&quot;Invariant Violation&quot;,this.message=ah(e,...t&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>from</evidence>
+									<otherinfo>The following pattern was used: \bFROM\b and was detected 9 times, the first in the element starting with: &quot;var BL=Object.defineProperty;var UL=(e,t,n)=&gt;t in e?BL(e,t,{enumerable:!0,configurable:!0,writable:!0,value:n}):e[t]=n;var me=(e&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>query</evidence>
+									<otherinfo>The following pattern was used: \bQUERY\b and was detected 18 times, the first in the element starting with: &quot;  */const Ia=typeof window&lt;&quot;u&quot;;function c4(e){return e.__esModule||e[Symbol.toStringTag]===&quot;Module&quot;}const pt=Object.assign;funct&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>user</evidence>
+									<otherinfo>The following pattern was used: \bUSER\b and was detected 3 times, the first in the element starting with: &quot;`));let h=qO((o=d.props)!=null?o:{},l),m=mk(d,h);for(let v in h)v.startsWith(&quot;on&quot;)&amp;&amp;(m.props||(m.props={}),m.props[v]=h[v]);retu&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>username</evidence>
+									<otherinfo>The following pattern was used: \bUSERNAME\b and was detected 2 times, the first in the element starting with: &quot;`),function(c){if(a=c.indexOf(&quot;:&quot;),i=e.trim(c.substr(0,a)).toLowerCase(),o=e.trim(c.substr(a+1)),i){if(s[i]&amp;&amp;t.indexOf(i)&gt;=0)ret&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>xxx</evidence>
+									<otherinfo>The following pattern was used: \bXXX\b and was detected in the element starting with: &quot;  `):&quot;&quot;,this.name=&quot;UnsubscriptionError&quot;,this.errors=n}});function cu(e,t){if(e){var n=e.indexOf(t);0&lt;=n&amp;&amp;e.splice(n,1)}}var la=f&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sba-settings.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>Admin</evidence>
+									<otherinfo>The following pattern was used: \bADMIN\b and was detected in the element starting with: &quot;  uiSettings: {&quot;title&quot;:&quot;Spring Boot Admin&quot;,&quot;brand&quot;:&quot;&lt;img src=\&quot;assets\/img\/icon-spring-boot-admin.svg\&quot;&gt;&lt;span&gt;Spring Boot Admin&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sba-settings.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>user</evidence>
+									<otherinfo>The following pattern was used: \bUSER\b and was detected in the element starting with: &quot;  user: {},&quot;, see evidence field for the suspicious comment/snippet.</otherinfo>
+								</instance>
+							
+						</instances>
+						<count>14</count>
+						<solution>&lt;p&gt;Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.&lt;/p&gt;</solution>
+						<otherinfo>&lt;p&gt;The following pattern was used: \bFROM\b and was detected 2 times, the first in the element starting with: &quot;`,Hy=String.fromCharCode(8232),Wy=String.fromCharCode(8233);function Vy(e){const t=e;let n=0,a=1,i=1,s=0;const r=M=&gt;t[M]===By&amp;&amp;t&quot;, see evidence field for the suspicious comment/snippet.&lt;/p&gt;</otherinfo>
+						<reference></reference>
+						<cweid>200</cweid>
+						<wascid>13</wascid>
+						<sourceid>24</sourceid>
+					</alertitem>
+				
+				
+					<alertitem>
+						<pluginid>10109</pluginid>
+						<alertRef>10109</alertRef>
+						<alert>Modern Web Application</alert>
+						<name>Modern Web Application</name>
+						<riskcode>0</riskcode>
+						<confidence>2</confidence>
+						<riskdesc>Informational (Medium)</riskdesc>
+						<confidencedesc>Medium</confidencedesc>
+						<desc>&lt;p&gt;The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.&lt;/p&gt;</desc>
+						<instances>
+							
+								<instance>
+									<uri>http://172.31.38.110:8092</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>&lt;script lang=&apos;javascript&apos; src=&apos;sba-settings.js&apos;&gt;&lt;/script&gt;</evidence>
+									<otherinfo>No links have been found while there are scripts, which is an indication that this is a modern web application.</otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>&lt;script lang=&apos;javascript&apos; src=&apos;sba-settings.js&apos;&gt;&lt;/script&gt;</evidence>
+									<otherinfo>No links have been found while there are scripts, which is an indication that this is a modern web application.</otherinfo>
+								</instance>
+							
+						</instances>
+						<count>2</count>
+						<solution>&lt;p&gt;This is an informational alert and so no changes are required.&lt;/p&gt;</solution>
+						<otherinfo>&lt;p&gt;No links have been found while there are scripts, which is an indication that this is a modern web application.&lt;/p&gt;</otherinfo>
+						<reference></reference>
+						<cweid>-1</cweid>
+						<wascid>-1</wascid>
+						<sourceid>7</sourceid>
+					</alertitem>
+				
+				
+					<alertitem>
+						<pluginid>10049</pluginid>
+						<alertRef>10049</alertRef>
+						<alert>Non-Storable Content</alert>
+						<name>Non-Storable Content</name>
+						<riskcode>0</riskcode>
+						<confidence>2</confidence>
+						<riskdesc>Informational (Medium)</riskdesc>
+						<confidencedesc>Medium</confidencedesc>
+						<desc>&lt;p&gt;The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.&lt;/p&gt;</desc>
+						<instances>
+							
+								<instance>
+									<uri>http://172.31.38.110:8092</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>no-store</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>no-store</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>no-store</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sba-settings.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>no-store</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>no-store</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/variables.css</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>no-store</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+						</instances>
+						<count>6</count>
+						<solution>&lt;p&gt;The content may be marked as storable by ensuring that the following conditions are satisfied:&lt;/p&gt;&lt;p&gt;The request method must be understood by the cache and defined as being cacheable (&quot;GET&quot;, &quot;HEAD&quot;, and &quot;POST&quot; are currently defined as cacheable)&lt;/p&gt;&lt;p&gt;The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)&lt;/p&gt;&lt;p&gt;The &quot;no-store&quot; cache directive must not appear in the request or response header fields&lt;/p&gt;&lt;p&gt;For caching by &quot;shared&quot; caches such as &quot;proxy&quot; caches, the &quot;private&quot; response directive must not appear in the response&lt;/p&gt;&lt;p&gt;For caching by &quot;shared&quot; caches such as &quot;proxy&quot; caches, the &quot;Authorization&quot; header field must not appear in the request, unless the response explicitly allows it (using one of the &quot;must-revalidate&quot;, &quot;public&quot;, or &quot;s-maxage&quot; Cache-Control response directives)&lt;/p&gt;&lt;p&gt;In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:&lt;/p&gt;&lt;p&gt;It must contain an &quot;Expires&quot; header field&lt;/p&gt;&lt;p&gt;It must contain a &quot;max-age&quot; response directive&lt;/p&gt;&lt;p&gt;For &quot;shared&quot; caches such as &quot;proxy&quot; caches, it must contain a &quot;s-maxage&quot; response directive&lt;/p&gt;&lt;p&gt;It must contain a &quot;Cache Control Extension&quot; that allows it to be cached&lt;/p&gt;&lt;p&gt;It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).   &lt;/p&gt;</solution>
+						<otherinfo></otherinfo>
+						<reference>&lt;p&gt;https://datatracker.ietf.org/doc/html/rfc7234&lt;/p&gt;&lt;p&gt;https://datatracker.ietf.org/doc/html/rfc7231&lt;/p&gt;&lt;p&gt;https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html&lt;/p&gt;</reference>
+						<cweid>524</cweid>
+						<wascid>13</wascid>
+						<sourceid>7</sourceid>
+					</alertitem>
+				
+				
+					<alertitem>
+						<pluginid>10049</pluginid>
+						<alertRef>10049</alertRef>
+						<alert>Storable and Cacheable Content</alert>
+						<name>Storable and Cacheable Content</name>
+						<riskcode>0</riskcode>
+						<confidence>2</confidence>
+						<riskdesc>Informational (Medium)</riskdesc>
+						<confidencedesc>Medium</confidencedesc>
+						<desc>&lt;p&gt;The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where &quot;shared&quot; caching servers such as &quot;proxy&quot; caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.&lt;/p&gt;</desc>
+						<instances>
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img/favicon.png</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>max-age=3600</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/index-0fa25697.css</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>max-age=3600</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/index-69ac858f.css</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>max-age=3600</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/index-6a52a913.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>max-age=3600</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/sba-7433e11a.js</uri>
+									<method>GET</method>
+									<param></param>
+									<attack></attack>
+									<evidence>max-age=3600</evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+						</instances>
+						<count>5</count>
+						<solution>&lt;p&gt;Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:&lt;/p&gt;&lt;p&gt;Cache-Control: no-cache, no-store, must-revalidate, private&lt;/p&gt;&lt;p&gt;Pragma: no-cache&lt;/p&gt;&lt;p&gt;Expires: 0&lt;/p&gt;&lt;p&gt;This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. &lt;/p&gt;</solution>
+						<otherinfo></otherinfo>
+						<reference>&lt;p&gt;https://datatracker.ietf.org/doc/html/rfc7234&lt;/p&gt;&lt;p&gt;https://datatracker.ietf.org/doc/html/rfc7231&lt;/p&gt;&lt;p&gt;https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html&lt;/p&gt;</reference>
+						<cweid>524</cweid>
+						<wascid>13</wascid>
+						<sourceid>16</sourceid>
+					</alertitem>
+				
+				
+					<alertitem>
+						<pluginid>10104</pluginid>
+						<alertRef>10104</alertRef>
+						<alert>User Agent Fuzzer</alert>
+						<name>User Agent Fuzzer</name>
+						<riskcode>0</riskcode>
+						<confidence>2</confidence>
+						<riskdesc>Informational (Medium)</riskdesc>
+						<confidencedesc>Medium</confidencedesc>
+						<desc>&lt;p&gt;Check for differences in response based on fuzzed User Agent (eg. mobile sites, access as a Search Engine Crawler). Compares the response statuscode and the hashcode of the response body with the original response.&lt;/p&gt;</desc>
+						<instances>
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>msnbot/1.1 (+http://search.msn.com/msnbot.htm)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/assets/img</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>msnbot/1.1 (+http://search.msn.com/msnbot.htm)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/robots.txt</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>msnbot/1.1 (+http://search.msn.com/msnbot.htm)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+							
+								<instance>
+									<uri>http://172.31.38.110:8092/sitemap.xml</uri>
+									<method>GET</method>
+									<param>Header User-Agent</param>
+									<attack>msnbot/1.1 (+http://search.msn.com/msnbot.htm)</attack>
+									<evidence></evidence>
+									<otherinfo></otherinfo>
+								</instance>
+							
+						</instances>
+						<count>48</count>
+						<solution></solution>
+						<otherinfo></otherinfo>
+						<reference>&lt;p&gt;https://owasp.org/wstg&lt;/p&gt;</reference>
+						<cweid>0</cweid>
+						<wascid>0</wascid>
+						<sourceid>275</sourceid>
+					</alertitem>
+				
+			</alerts>
+		</site>
+	
+</OWASPZAPReport>
